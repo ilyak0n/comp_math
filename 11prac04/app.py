@@ -117,9 +117,13 @@ def rebuild_route() -> None:
 
     if st.session_state.auto_radius:
         if len(st.session_state.points) >= 2:
-            radius = int(compute_required_radius(st.session_state.points))
+            calculated_radius = int(compute_required_radius(st.session_state.points))
         else:
-            radius = MIN_AUTO_RADIUS
+            calculated_radius = MIN_AUTO_RADIUS
+            
+        default_min_km = float(MIN_AUTO_RADIUS / 1000)
+        min_limit_m = int(st.session_state.get("min_radius_input", default_min_km) * 1000)
+        radius = max(calculated_radius, min_limit_m)
         radius_mode = f"авто ({radius / 1000:.1f} км)"
     else:
         radius = st.session_state.custom_radius
