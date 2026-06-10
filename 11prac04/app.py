@@ -513,31 +513,31 @@ def main():
                     "living_street": 1.4, "service": 1.5, "unclassified": 1.3,
                 }
 
-            cols = st.columns(2)
-            with st.form("comfort_factors_form"):
-                custom = {}
-                for idx, (hw, ru_name) in enumerate(road_names_ru.items()):
-                    col = cols[idx % 2]
-                    default_val = st.session_state.custom_factors.get(hw, 1.0)
-                    val = col.number_input(
-                        f"{ru_name} ({hw})",
-                        min_value=0.1,
-                        max_value=5.0,
-                        value=default_val,
-                        step=0.05,
-                        format="%.2f",
-                        key=f"factor_{hw}"
-                    )
-                    custom[hw] = val
-                st.write("") 
+                cols = st.columns(2)
+                with st.form("comfort_factors_form"):
+                    custom = {}
+                    for idx, (hw, ru_name) in enumerate(road_names_ru.items()):
+                        col = cols[idx % 2]
+                        default_val = st.session_state.custom_factors.get(hw, 1.0)
+                        val = col.number_input(
+                            f"{ru_name} ({hw})",
+                            min_value=0.1,
+                            max_value=5.0,
+                            value=default_val,
+                            step=0.05,
+                            format="%.2f",
+                            key=f"factor_{hw}"
+                        )
+                        custom[hw] = val
+                    st.write("") 
                 
-                if st.form_submit_button("Сбросить коэффициенты"):
-                    st.session_state.custom_factors = default_factors_map
-                    clear_route()
-                    st.success("Коэффициенты сброшены до стандартных.")
-                    st.rerun()
-                    
-                st.session_state.custom_factors = custom
+                    if st.form_submit_button("Сбросить коэффициенты"):
+                        st.session_state.custom_factors = default_factors_map
+                        clear_route()
+                        st.success("Коэффициенты сброшены до стандартных.")
+                        st.rerun()
+                        
+                    st.session_state.custom_factors = custom
 
 
         if st.button("🚚 Построить маршрут", type="primary"):
