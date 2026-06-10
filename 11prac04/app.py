@@ -443,15 +443,34 @@ def main():
         st.session_state.criterion = criterion
 
         auto_radius = st.checkbox(
-            "Автоматически рассчитать радиус по точкам",
-            value=st.session_state.auto_radius,
-            help="Если включено, радиус охвата графа будет автоматически вычислен на основе максимального расстояния между точками (с запасом). Иначе можно задать вручную.",
-            on_change=clear_route,
-            key="auto_radius_checkbox"
+        "Автоматически рассчитать радиус по точкам",
+        value=st.session_state.auto_radius,
+        help="Если включено, радиус охвата графа будет автоматически вычислен на основе максимального расстояния между точками (с запасом). Иначе можно задать вручную.",
+        on_change=clear_route,
+        key="auto_radius_checkbox"
         )
         st.session_state.auto_radius = auto_radius
 
-        if not auto_radius:
+        if auto_radius:
+            if len(st.session_state.points) >= 2:
+                calculated_radius = int(compute_required_radius(st.session_state.points))
+            else:
+                calculated_radius = MIN_AUTO_RADIUS
+            
+            min_radius_km = st.number_input(
+                "Минимальный радиус загрузки графа, км",
+                min_value=0.5,
+                max_value=20.0,
+                value=float(MIN_AUTO_RADIUS / 1000),
+                step=0.5,
+                key="min_radius_input",
+                on_change=clear_route
+            )
+            
+            final_radius = max(calculated_radius, int(min_radius_km * 1000))
+            st.caption(f"Авторадиус для текущих точек: {final_radius / 1000:.1f} км.")
+            
+        else:
             custom_radius_m = st.number_input(
                 "Радиус загрузки графа (метры)",
                 min_value=100,
@@ -463,6 +482,7 @@ def main():
                 key="custom_radius_input"
             )
             st.session_state.custom_radius = int(custom_radius_m)
+
 
         return_to_start = st.checkbox(
             "Вернуться в стартовую точку",
