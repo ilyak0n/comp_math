@@ -463,7 +463,7 @@ def main():
             
             min_radius_km = st.number_input(
                 "Минимальный радиус загрузки графа, км",
-                min_value=0.5,
+                min_value=0.01,
                 max_value=20.0,
                 value=float(MIN_AUTO_RADIUS / 1000),
                 step=0.5,
