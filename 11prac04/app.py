@@ -494,7 +494,7 @@ def main():
         st.session_state.return_to_start = return_to_start
 
         if criterion == "comfort":
-            st.subheader("Коэффициенты комфорта")
+        with st.expander("Коэффициенты комфорта", expanded=True):
             road_names_ru = {
                 "motorway": "Автомагистраль",
                 "trunk": "Скоростная дорога",
@@ -506,6 +506,13 @@ def main():
                 "service": "Служебная дорога",
                 "unclassified": "Неклассифицированная",
             }
+            
+            default_factors_map = {
+                "motorway": 0.7, "trunk": 0.8, "primary": 0.85,
+                "secondary": 0.9, "tertiary": 1.0, "residential": 1.2,
+                "living_street": 1.4, "service": 1.5, "unclassified": 1.3,
+            }
+
             cols = st.columns(2)
             with st.form("comfort_factors_form"):
                 custom = {}
@@ -522,10 +529,16 @@ def main():
                         key=f"factor_{hw}"
                     )
                     custom[hw] = val
-                if st.form_submit_button("Применить коэффициенты"):
-                    st.session_state.custom_factors = custom
+                st.write("") 
+                
+                if st.form_submit_button("Сбросить коэффициенты"):
+                    st.session_state.custom_factors = default_factors_map
                     clear_route()
-                    st.success("Коэффициенты обновлены. Перестройте маршрут.")
+                    st.success("Коэффициенты сброшены до стандартных.")
+                    st.rerun()
+                    
+                st.session_state.custom_factors = custom
+
 
         if st.button("🚚 Построить маршрут", type="primary"):
             rebuild_route()
