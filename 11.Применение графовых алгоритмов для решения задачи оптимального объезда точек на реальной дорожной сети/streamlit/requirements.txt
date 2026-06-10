@@ -1,4 +1,10 @@
-streamlit>=1.32.0
-folium>=0.15.0
-streamlit-folium>=0.22.0
-geopy>=2.4.0
+streamlit
+streamlit-folium
+folium
+geopy
+numpy
+pandas
+scipy
+networkx
+shapely
+osmnx
