@@ -494,24 +494,24 @@ def main():
         st.session_state.return_to_start = return_to_start
 
         if criterion == "comfort":
-        with st.expander("Коэффициенты комфорта", expanded=True):
-            road_names_ru = {
-                "motorway": "Автомагистраль",
-                "trunk": "Скоростная дорога",
-                "primary": "Главная дорога",
-                "secondary": "Второстепенная дорога",
-                "tertiary": "Местная дорога",
-                "residential": "Жилая улица",
-                "living_street": "Жилая зона",
-                "service": "Служебная дорога",
-                "unclassified": "Неклассифицированная",
-            }
-            
-            default_factors_map = {
-                "motorway": 0.7, "trunk": 0.8, "primary": 0.85,
-                "secondary": 0.9, "tertiary": 1.0, "residential": 1.2,
-                "living_street": 1.4, "service": 1.5, "unclassified": 1.3,
-            }
+            with st.expander("Коэффициенты комфорта", expanded=True):
+                road_names_ru = {
+                    "motorway": "Автомагистраль",
+                    "trunk": "Скоростная дорога",
+                    "primary": "Главная дорога",
+                    "secondary": "Второстепенная дорога",
+                    "tertiary": "Местная дорога",
+                    "residential": "Жилая улица",
+                    "living_street": "Жилая зона",
+                    "service": "Служебная дорога",
+                    "unclassified": "Неклассифицированная",
+                }
+                
+                default_factors_map = {
+                    "motorway": 0.7, "trunk": 0.8, "primary": 0.85,
+                    "secondary": 0.9, "tertiary": 1.0, "residential": 1.2,
+                    "living_street": 1.4, "service": 1.5, "unclassified": 1.3,
+                }
 
             cols = st.columns(2)
             with st.form("comfort_factors_form"):
