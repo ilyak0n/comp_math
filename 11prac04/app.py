@@ -461,7 +461,7 @@ def main():
                 "Минимальный радиус загрузки графа, км",
                 min_value=0.5,
                 max_value=20.0,
-                value=float(MIN_AUTO_RADIUS / 1000),
+                value=float(MIN_AUTO_RADIUS / 12000),
                 step=0.5,
                 key="min_radius_input",
                 on_change=clear_route
